@@ -1,0 +1,39 @@
+version: '3'
+services:
+    #For using container DB connection
+    db:
+        container_name: gnito_db
+        build:
+            context: ./server/db
+        ports: 
+            - 27017:27017
+        volumes: 
+            - ./server/db/data:/data/db
+            - ./server/db/initdb:/docker-entrypoint-initdb.d
+        env_file: ./server/db/.env
+        command: mongod
+    api:
+        container_name: gnito_api
+        build: 
+            context: ./server/api
+        ports: 
+            - 3000:3000
+        volumes:
+            - ./server/api:/api
+        #Only if using container DB
+        depends_on: 
+            - db
+        env_file: ./server/api/.env
+        command: npm run start-dev
+    app:
+        container_name: gnito_app
+        build:
+            context: ./client/app
+        ports: 
+            - 8080:8080
+        volumes: 
+            - ./client/app:/app
+        depends_on: 
+            - api
+        env_file: ./client/app/.env
+        command: npm run serve
