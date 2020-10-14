@@ -1,8 +1,8 @@
 <template>
-  <nav>
-    <NavButton to="/search" i="search" >Search</NavButton>
-    <NavButton to="/" i="home" >Home</NavButton>
-    <NavButton to="/create" i="add" >Create</NavButton>
+  <nav class="nav">
+    <NavButton to="/search" i="search" ></NavButton>
+    <NavButton to="/" i="home" ></NavButton>
+    <NavButton to="/create" i="add" ></NavButton>
   </nav>
 </template>
 
@@ -19,13 +19,12 @@ export default {
 </script>
 
 <style>
-  nav {
+  .nav {
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 65px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, .2);
-    background-color: #ffffff;
+    background-color: rgba(255,255,255,.2);
     display: flex;
     overflow-x: auto;
   }

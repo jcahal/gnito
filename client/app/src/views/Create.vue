@@ -1,23 +1,20 @@
 <template>
-  <section class="search">
-      <h2>Create</h2>
-      <Input type="text" placeholder="Title" v-model="title" />
-      <TextArea placeholder="Message" v-model="message"></TextArea>
-      <Input type="password" placeholder="Password" v-model="password" />
-      <Input type="button" value="Create" v-on:click="create" />
-    </section>
+  <Card id="create-form">
+    <input id="create-form-id" type="text" placeholder="Title" v-model="title" />
+    <textarea id="create-form-message" placeholder="Message" v-model="message"></textarea>
+    <input id="create-form-password" type="password" placeholder="Password" v-model="password" />
+    <input id="create-form-button" type="button" value="Create" @click="create" />
+  </Card>
 </template>
 
 <script>
 // @ is an alias to /src
-import Input from '@/components/Input.vue'
-import TextArea from '@/components/TextArea.vue'
+import Card from '@/components/Card.vue'
 
 export default {
   name: 'Create',
   components: {
-    Input,
-    TextArea
+    Card,
   },
   data() {
     return {
@@ -28,15 +25,25 @@ export default {
   },
   methods: {
     create: function() {
-      // TODO: define the post of a new drop
-      this.$http.post("http://localhost:3000/api/", this.create).then( res => {
+
+      //TODO: Clear fields after create
+
+      const drop = {
+        title: this.title,
+        message: this.message,
+        password: this.password
+      }
+
+      this.$http.post("http://localhost:3000/api/", drop).then( res => {
         let url = `http://localhost:8080/${res.data._id}?pwd=${res.data.password}`
 
         this.$store.dispatch('setFlash', { 
-          on: true, 
-          success: true,  
-          error: false, 
-          message: `<a href="${url}">${url}</a>`
+          message: 
+          `
+          <h2>Success!</h2>
+          <a href="${url}">${url}</a>
+          `,
+          context: 'success'
         })
       })
     }
@@ -45,5 +52,6 @@ export default {
 </script>
 
 <style>
+
   
 </style>

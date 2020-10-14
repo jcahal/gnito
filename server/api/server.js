@@ -77,9 +77,10 @@ app.route('/api/')
     })
   })
 
+// TODO: figure out how to get with special characters in password
 app.route('/api/:drop')
   .get( (req, res) => {
-    Drop.find({ _id: req.params.drop, password: req.query.pwd }, (err, drop) => {
+    Drop.find({ _id: req.params.drop, password: `${req.query.pwd}` }, (err, drop) => {
       res.json(drop)
     })
     Drop.findOneAndDelete({ _id: req.params.drop}) // TODO: fix this

@@ -1,14 +1,7 @@
 <template>
-  <main class="sub-grid">
-    
-    <section class="create">
-      <h2>Create</h2>
-      <input type="text" placeholder="Title" v-model="create.title">
-      <input type="text" placeholder="Message" v-model="create.message">
-      <input type="password" placeholder="Password" v-model="create.password">
-      <input type="button" value="Create Drop" v-on:click="createDrop">
-    </section>
-  </main>
+  <section class="logo">
+    <h1><small>inco</small>GNITO</h1>
+  </section>
 </template>
 
 <script>
@@ -16,40 +9,19 @@
 
 export default {
   name: 'Home',
-  data() {
-    return {
-      search: {
-        id: '',
-        password: ''
-      },
-      create: {
-        title: '',
-        message: '',
-        password: ''
-      },
-    }
-  },
-  methods: {
-    searchDrops: function() {  
-      this.$router.push('/' + this.search.id + '?pwd=' + this.search.password)
-    },
-    createDrop: function() {
-      // TODO: define the post of a new drop
-      this.$http.post("http://localhost:3000/api/", this.create).then( res => {
-        let url = `http://localhost:8080/${res.data._id}?pwd=${res.data.password}`
-
-        this.$store.dispatch('setFlash', { 
-          on: true, 
-          success: true,  
-          error: false, 
-          message: `<a href="${url}">${url}</a>`
-        })
-      })
-    }
-  }
 }
 </script>
 
 <style>
+  .logo {
+    text-align: center;
+  }
 
+  .logo h1 {
+    font-size: 6em;
+  }
+
+  .logo h1 small {
+    font-family: 'Pacifico', cursive;
+  }
 </style>

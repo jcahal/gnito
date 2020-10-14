@@ -1,35 +1,39 @@
 <template>
-  <section class="search">
-      <h2>Search</h2>
-      <Input type="text" placeholder="Drop ID" v-model="drop.id" />
-      <Input type="password" placeholder="Password" v-model="drop.password" />
-      <Input type="button" value="Search" v-on:click.native="search" />
-    </section>
+  <Card id="search-form">
+    <input id="search-form-drop-id" type="text" placeholder="Drop" v-model="id" />
+    <input id="search-form-drop-password" type="password" placeholder="Password" v-model="password" />
+    <input id="search-form-button" type="button" value="Search" @click="search" />
+  </Card>
 </template>
 
 <script>
 // @ is an alias to /src
-import Input from '@/components/Input.vue'
+import Card from '@/components/Card.vue'
 
 export default {
   name: 'Search',
   components: {
-    Input,
+    Card
   },
   data() {
     return {
-      drop: {
-        id: '',
-        password: ''
-      }
+      id: '',
+      password: ''
     }
   },
   methods: {
     search: function() {  
-      if(this.drop.id == ''){
-        // TODO: Error message
+      if(this.id == ''){
+        this.$store.dispatch('setFlash', {
+          message: 
+          `
+          <h2>Failed.</h2>
+          <p>No ID provided</p>
+          `, 
+          context: 'error'
+        })
       } else {
-        this.$router.push('/' + this.drop.id + '?pwd=' + this.drop.password)
+        this.$router.push('/' + this.id + '?pwd=' + this.password)
       }
 
     },

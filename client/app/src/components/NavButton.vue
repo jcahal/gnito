@@ -1,4 +1,14 @@
 <template>
+  <!-- 
+  TODO: Fix the styling so I can have .nav-class and not affect other <a> tags
+
+  <nav class="nav-button">
+    <router-link :to="to">
+      <i class="material-icons">{{ i }}</i>
+      <slot></slot>
+    </router-link>
+  </nav>       
+  -->
   <router-link :to="to">
     <i class="material-icons">{{ i }}</i>
     <slot></slot>
@@ -18,8 +28,12 @@ export default {
 </script>
 
 <style>
-  a {
-    padding-top: 10px;
+  .nav-button {
+    padding-top: 20px;
+  }
+
+  .nav-button, a {
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,21 +41,21 @@ export default {
     min-width: 50px;
     overflow: hidden;
     white-space: nowrap;
-    color: #444444;
+    color: rgba(0,0,0,.5);
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
     transition: background-color 0.1s ease-in-out;
   }
 
-  a:hover {
-    background-color: #eeeeee;
+  .nav-button, a:hover {
+    background-color: rgba(255,255,255,.1);
   }
 
-  a:active {
-    color: #009578;
+  .nav-button, a:active {
+    color: rgba(0,0,0,.3);
   }
 
-  i {
-    font-weight: 18px;
+  .nav-button, i {
+    font-weight: 30px;
   }
 </style>

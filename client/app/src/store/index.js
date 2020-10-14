@@ -10,8 +10,9 @@ export default new Vuex.Store({
   state: {
     flash: {
       on: false,
-      success: false,
-      error: false
+      context: '',
+      message: '',
+      timer: 0
     },
     drop: {
       message: '',
@@ -22,6 +23,14 @@ export default new Vuex.Store({
   mutations: {
     SET_FLASH(state, flash) {
       state.flash = flash
+      state.flash.timer = 5
+      state.flash.on = true
+      
+      setTimeout(() => { state.flash = { 
+        on: false, 
+        context: '',
+        message: '',
+      }}, state.flash.timer * 1000)
     },
     SET_DROP(state, drop) {
       state.drop = drop
