@@ -1,12 +1,11 @@
 /**
- * GNITO
+ * incoGNITO Web Client
  * 
  * Author: jcahal
- * Version: 0.0.1
+ * Version: 0.0.2
  * 
  * TODO:
  *  Comment files, including header comments
- *  Finish style
  * 
  */
 

@@ -39,7 +39,7 @@ export default new Vuex.Store({
   actions: {
     retrieveDrop(context) {
       axios.get(`http://localhost:3000/api${router.currentRoute.fullPath}`).then(response => {
-        const [drop] = response.data // Destructuring Assignment
+        const drop = response.data
         context.commit('SET_DROP', drop)
       })
     },

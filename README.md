@@ -1,4 +1,4 @@
-# incoGNITO v0.0.3
+# incoGNITO v0.0.4
 
 ## Getting Started
 ### Database Configuration
@@ -10,8 +10,7 @@ Do nothing, Mongo Atlas is configured by default. Skip to [Running the App](#run
 #### Local instance setup
 Create a file named .env in the /server/api directory and copy/paste these lines
 ```
-DB_ADDRESS=db
-DB_PORT=27017
+DB_ADDRESS=db:27017
 DB_PROTOCOL=mongodb
 DB_NAME=dev
 DB_USERNAME=dev
@@ -31,7 +30,7 @@ incoGNITO can be ran using [Node](https://nodejs.org/en/) or [Docker](https://ww
 
 First start the API by running these commands.
 ```
-cd /server/api
+cd server/api
 ```
 ```
 npm install 
@@ -40,9 +39,9 @@ npm install
 npm run start
 ```
 
-Then start the Client by running these commands.
+Then, in a new terminal, start the Client by running these commands.
 ```
-cd /client/app
+cd client/app
 ```
 ```
 npm install 

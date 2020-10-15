@@ -2,7 +2,7 @@
  * GNITO API
  * 
  * Author: jcahal
- * Version: 0.0.1
+ * Version: 0.0.3
  * 
  * TODO: 
  *  Fix delete after retrieve
@@ -34,17 +34,20 @@ app.use(function(req, res, next) {
 
 // DB Connection
 const DBA = process.env.DB_ADDRESS || 'cluster0.faqgv.mongodb.net';
-const DBP = process.env.DB_PORT || '27017';
 const PR = process.env.DB_PROTOCOL || 'mongodb+srv';
 const DB = process.env.DB_NAME || 'gnito';
 const UN = process.env.DB_USERNAME || 'gnito-client';
 const PW = process.env.DB_PASSWORD || 'E3oKn3I8CInd';
-mongoose.connect(`${PR}://${UN}:${PW}@${DBA}:${DBP}/${DB}`);
+mongoose.connect(`${PR}://${UN}:${PW}@${DBA}/${DB}`, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+});
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function() {
-  console.log(`Connected to mongodb://${UN}:${PW}@${DBA}:27017/${DB}`)
+  console.log(`Connected to ${PR}://${UN}:${PW}@${DBA}/${DB}`)
 })
 
 const Schema = mongoose.Schema
@@ -70,7 +73,7 @@ app.route('/api/')
   .get((req, res) => {
     res.json({
       name: 'gnito-api',
-      version: '0.0.2'
+      version: '0.0.3'
     })
   })
   .post(jsonParser, (req, res) => {
@@ -82,8 +85,7 @@ app.route('/api/')
 // TODO: figure out how to get with special characters in password
 app.route('/api/:drop')
   .get( (req, res) => {
-    Drop.find({ _id: req.params.drop, password: `${req.query.pwd}` }, (err, drop) => {
+    Drop.findOneAndRemove({ _id: req.params.drop, password: `${req.query.pwd}` }, (err, drop) => {
       res.json(drop)
     })
-    Drop.findOneAndDelete({ _id: req.params.drop}) // TODO: fix this
   })

@@ -1,3 +1,8 @@
+<script>
+// TODO: See how it would look with context color
+// on letters and not the entire card.
+</script>
+
 <template>
   <div id="flash" :class="{on: flash.on}" >
     <Card :context="flash.context" v-html="flash.message" ></Card>
