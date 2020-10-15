@@ -1,6 +1,11 @@
 <script>
-// TODO: See how it would look with context color
-// on letters and not the entire card.
+// TODO: 
+// -  See how it would look with context color
+//    on letters and not the entire card.
+// -  Make <Card> to the root of template and
+//    utilize it's slot to display flash.message.
+//    This will allow for a "close" button
+//    independent of other <Card> instances.
 </script>
 
 <template>

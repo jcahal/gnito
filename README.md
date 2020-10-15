@@ -1,7 +1,7 @@
 # incoGNITO v0.0.4
 
 ## Getting Started
-### Database Configuration
+### [Database Configuration](#database-configuration)
 incoGNITO can use either [Mongo Atlas](https://cloud.mongodb.com) _(default)_ or a local instance of MongoDB using the **db** container provided in the [docker-compose.yaml](docker-compose.yaml) file. 
 
 #### Mongo Atlas setup
@@ -58,3 +58,13 @@ docker-compose build
 ```
 docker-compose up
 ```
+
+## [Usage](#usage)
+Once everything is set up, the app should be running on http://localhost:8080.
+
+### Search
+#### by form
+You can search for a drop at http://localhost:8080/search by typing the drop id and password.
+
+#### by URL
+You can also simply go to the url in the form of http://localhost:8080/drop-id?pwd=password

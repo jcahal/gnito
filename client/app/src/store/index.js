@@ -12,7 +12,7 @@ export default new Vuex.Store({
       on: false,
       context: '',
       message: '',
-      timer: 0
+      timeout: 0
     },
     drop: {
       message: '',
@@ -23,14 +23,15 @@ export default new Vuex.Store({
   mutations: {
     SET_FLASH(state, flash) {
       state.flash = flash
-      state.flash.timer = 5
       state.flash.on = true
       
+      // Staged for removal, close button on flash makes more sense
+      state.flash.timeout = 10
       setTimeout(() => { state.flash = { 
         on: false, 
         context: '',
         message: '',
-      }}, state.flash.timer * 1000)
+      }}, state.flash.timeout * 1000)
     },
     SET_DROP(state, drop) {
       state.drop = drop
