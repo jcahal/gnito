@@ -32,12 +32,14 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Container DB Connection
-const DBA = process.env.DB_ADDRESS;
-const DB = process.env.DB_NAME;
-const UN = process.env.DB_USERNAME;
-const PW = process.env.DB_PASSWORD;
-mongoose.connect(`mongodb://${UN}:${PW}@${DBA}:27017/${DB}`);
+// DB Connection
+const DBA = process.env.DB_ADDRESS || 'cluster0.faqgv.mongodb.net';
+const DBP = process.env.DB_PORT || '27017';
+const PR = process.env.DB_PROTOCOL || 'mongodb+srv';
+const DB = process.env.DB_NAME || 'gnito';
+const UN = process.env.DB_USERNAME || 'gnito-client';
+const PW = process.env.DB_PASSWORD || 'E3oKn3I8CInd';
+mongoose.connect(`${PR}://${UN}:${PW}@${DBA}:${DBP}/${DB}`);
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
@@ -68,7 +70,7 @@ app.route('/api/')
   .get((req, res) => {
     res.json({
       name: 'gnito-api',
-      version: '0.0.1'
+      version: '0.0.2'
     })
   })
   .post(jsonParser, (req, res) => {
