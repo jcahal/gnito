@@ -1,4 +1,4 @@
-# incoGNITO v0.0.2 
+# incoGNITO v0.0.3
 
 ## Getting Started
 ### Database Configuration
