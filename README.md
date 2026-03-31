@@ -2,7 +2,7 @@
 
 A self-destructing secret message app. Create an encrypted drop, share the link — the message is permanently deleted the moment it's read.
 
-**Live:** [gnito-app.onrender.com](https://gnito-app.onrender.com) *(may take ~30s to wake on first visit)*
+**Live:** [gnito-app.onrender.com](https://gnito-app.onrender.com) *(may take ~60s to wake on first visit)*
 
 ---
 
@@ -10,13 +10,13 @@ A self-destructing secret message app. Create an encrypted drop, share the link 
 
 1. Write a message, give it a title and password
 2. Get a shareable link
-3. Recipient opens the link, enters the password — message is displayed once then deleted from the database
+3. Recipient opens the link with embedded password, or searches for message using ID and password — message is displayed once then deleted from the database
 
 ## Stack
 
-- **Frontend** — Vue.js 2, Vuex, Vue Router, hosted as a static site on Render
-- **API** — Node.js, Express, hosted on Render (free tier)
-- **Database** — MongoDB, running as a private container service on Render
+- **Frontend** — Vue.js 2, Vuex, Vue Router
+- **API** — Node.js, Express.js
+- **Database** — MongoDB
 
 ## Running locally
 
