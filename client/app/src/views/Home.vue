@@ -1,7 +1,6 @@
 <template>
   <section class="logo">
     <h1><small>inco</small>GNITO</h1>
-    <p class="cold-start-notice">First request may take ~30s to wake the server.</p>
   </section>
 </template>
 
