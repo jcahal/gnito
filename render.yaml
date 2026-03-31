@@ -3,6 +3,7 @@ services:
   # Note: free tier has ephemeral storage — data is wiped on redeploy/restart
   - type: pserv
     name: gnito-db
+    runtime: image
     image:
       url: docker.io/library/mongo:7
     plan: free
