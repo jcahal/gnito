@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:16
 RUN npm install -g @vue/cli
 WORKDIR /app
 COPY . .

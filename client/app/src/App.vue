@@ -1,5 +1,12 @@
 <template>
   <div id="app" class="grid">
+    <div v-if="coldStartLoading" class="cold-start-overlay">
+      <div class="cold-start-box">
+        <div class="loader"><div></div><div></div><div></div></div>
+        <p class="cold-start-title">Server is waking up...</p>
+        <p class="cold-start-sub">This may take <strong>~1 min</strong>.</p>
+      </div>
+    </div>
     <header>
       <Flash />
     </header>
@@ -13,6 +20,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Flash from '@/components/Flash.vue'
 import Nav from '@/components/Nav.vue'
 
@@ -21,6 +29,12 @@ export default {
   components: {
     Flash,
     Nav
+  },
+  computed: mapState({
+    coldStartLoading: state => state.coldStartLoading
+  }),
+  mounted() {
+    this.$store.dispatch('pingApi')
   }
 }
 </script>
@@ -99,4 +113,68 @@ input {
   textarea:focus {
     outline: none;
   }
+
+.cold-start-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 3, 34, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.cold-start-box {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cold-start-title {
+  margin: 20px 0 8px;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+}
+
+.cold-start-sub {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+}
+
+.loader {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.loader div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: rgba(255, 255, 255, .4);
+  animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.loader div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.loader div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.loader div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes loader {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
 </style>

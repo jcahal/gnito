@@ -10,7 +10,14 @@
 
 <template>
   <div id="flash" :class="{on: flash.on}" >
-    <Card :context="flash.context" v-html="flash.message" ></Card>
+    <Card :context="flash.context">
+      <span v-html="flash.message"></span>
+      <span
+        v-if="flash.shareLink"
+        class="share-link"
+        @click="copy"
+      >{{ copied ? 'Copied!' : flash.shareLink }}</span>
+    </Card>
   </div>
 </template>
 
@@ -24,13 +31,44 @@ export default {
   components: {
     Card
   },
+  data() {
+    return { copied: false }
+  },
   computed: mapState({
     flash: state => state.flash
   }),
+  methods: {
+    copy() {
+      navigator.clipboard.writeText(this.flash.shareLink)
+      this.copied = true
+      setTimeout(() => { this.copied = false }, 2000)
+    }
+  },
+  watch: {
+    'flash.shareLink'() {
+      this.copied = false
+    }
+  }
 }
 </script>
 
 <style>
+.share-link {
+  display: block;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, .2);
+  border-radius: 4px;
+  cursor: pointer;
+  word-break: break-all;
+  font-size: 0.9rem;
+  transition: background 0.15s;
+}
+
+.share-link:hover {
+  background: rgba(255, 255, 255, .35);
+}
+
 #flash {
   visibility: hidden;
   position: absolute;
