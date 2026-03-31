@@ -1,0 +1,38 @@
+services:
+  # MongoDB — private service, internal network only, not exposed to the internet
+  # Note: free tier has ephemeral storage — data is wiped on redeploy/restart
+  - type: pserv
+    name: gnito-db
+    image:
+      url: docker.io/library/mongo:7
+    plan: free
+
+  # Express API — free tier, sleeps after 15min inactivity (~30s cold start on first request)
+  - type: web
+    name: gnito-api
+    runtime: docker
+    dockerfilePath: ./server/api/Dockerfile
+    dockerContext: ./server/api
+    plan: free
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: MONGO_URL
+        value: mongodb://gnito-db:27017/gnito
+
+  # Vue frontend — static site, never sleeps, free forever
+  - type: static
+    name: gnito-app
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    rootDir: client/app
+    pullRequestPreviewsEnabled: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VUE_APP_API_URL
+        # Set this to your gnito-api Render URL after first deploy, e.g.:
+        # https://gnito-api.onrender.com/api
+        sync: false
