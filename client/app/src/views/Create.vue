@@ -35,20 +35,16 @@ export default {
         password: passwordHash
       }
 
-      const apiUrl = (process.env.VUE_APP_API_URL || "https://gnito-api.herokuapp.com/api") + "/"
-      const appBase = window.location.origin + window.location.pathname
+      const apiUrl = (process.env.VUE_APP_API_URL || "https://gnito-api.onrender.com/api") + "/"
       this.$http.post(apiUrl, drop).then( res => {
         this.title = ''
         this.message = ''
         this.password = ''
 
-        const shareLink = `${appBase}${res.data._id}?pwd=${originalPassword}`
+        const shareLink = `${window.location.origin}/${res.data._id}?pwd=${originalPassword}`
         this.$store.dispatch('setFlash', {
-          message:
-          `
-          <h2>Success!</h2>
-          <a href="${shareLink}">${shareLink}</a>
-          `,
+          message: '<h2>Success!</h2>',
+          shareLink,
           context: 'success'
         })
       })
