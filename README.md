@@ -1,70 +1,27 @@
-# incoGNITO v0.0.4
+# incoGNITO
 
-## Getting Started
-### [Database Configuration](#database-configuration)
-incoGNITO can use either [Mongo Atlas](https://cloud.mongodb.com) _(default)_ or a local instance of MongoDB using the **db** container provided in the [docker-compose.yaml](docker-compose.yaml) file. 
+A self-destructing secret message app. Create an encrypted drop, share the link — the message is permanently deleted the moment it's read.
 
-#### Mongo Atlas setup
-Do nothing, Mongo Atlas is configured by default. Skip to [Running the App](#running-the-app) section
+**Live:** [gnito-app.onrender.com](https://gnito-app.onrender.com) *(may take ~30s to wake on first visit)*
 
-#### Local instance setup
-Create a file named .env in the /server/api directory and copy/paste these lines
-```
-DB_ADDRESS=db:27017
-DB_PROTOCOL=mongodb
-DB_NAME=dev
-DB_USERNAME=dev
-DB_PASSWORD=dev
-```
+---
 
-Then create a .env file in the /server/db directory and paste these lines
-```
-MONGO_INITDB_ROOT_USERNAME=root
-MONGO_INITDB_ROOT_PASSWORD=root
-```
+## How it works
 
-### [Running the App](#running-the-app)
-incoGNITO can be ran using [Node](https://nodejs.org/en/) or [Docker](https://www.docker.com/get-started) by running the commands in the section below.
+1. Write a message, give it a title and password
+2. Get a shareable link
+3. Recipient opens the link, enters the password — message is displayed once then deleted from the database
 
-#### To run using Node
+## Stack
 
-First start the API by running these commands.
-```
-cd server/api
-```
-```
-npm install 
-```
-```
-npm run start
+- **Frontend** — Vue.js 2, Vuex, Vue Router, hosted as a static site on Render
+- **API** — Node.js, Express, hosted on Render (free tier)
+- **Database** — MongoDB, running as a private container service on Render
+
+## Running locally
+
+```bash
+docker-compose up --build
 ```
 
-Then, in a new terminal, start the Client by running these commands.
-```
-cd client/app
-```
-```
-npm install 
-```
-```
-npm run seve
-```
-
-#### To run using Docker
-From the root directory run these commands.
-```
-docker-compose build
-```
-```
-docker-compose up
-```
-
-## [Usage](#usage)
-Once everything is set up, the app should be running on http://localhost:8080.
-
-### Search
-#### by form
-You can search for a drop at http://localhost:8080/search by typing the drop id and password.
-
-#### by URL
-You can also simply go to the url in the form of http://localhost:8080/drop-id?pwd=password
+App runs at `http://localhost:8080`, API at `http://localhost:3000`.

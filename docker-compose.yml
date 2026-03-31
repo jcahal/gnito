@@ -35,5 +35,5 @@ services:
             - ./client/app:/app
         depends_on: 
             - api
-        env_file: ./client/app/.env
+        env_file: ./client/app/.env.dev
         command: npm run serve

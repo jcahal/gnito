@@ -10,6 +10,7 @@
 <script>
 // @ is an alias to /src
 import Card from '@/components/Card.vue'
+import { hashPassword } from '@/utils'
 
 export default {
   name: 'Create',
@@ -24,24 +25,29 @@ export default {
     }
   },
   methods: {
-    create: function() {
-
-      //TODO: Clear fields after create
+    create: async function() {
+      const originalPassword = this.password
+      const passwordHash = await hashPassword(originalPassword)
 
       const drop = {
         title: this.title,
         message: this.message,
-        password: this.password
+        password: passwordHash
       }
 
-      this.$http.post("http://localhost:3000/api/", drop).then( res => {
-        let url = `http://localhost:8080/${res.data._id}?pwd=${res.data.password}`
+      const apiUrl = (process.env.VUE_APP_API_URL || "https://gnito-api.herokuapp.com/api") + "/"
+      const appBase = window.location.origin + window.location.pathname
+      this.$http.post(apiUrl, drop).then( res => {
+        this.title = ''
+        this.message = ''
+        this.password = ''
 
-        this.$store.dispatch('setFlash', { 
-          message: 
+        const shareLink = `${appBase}${res.data._id}?pwd=${originalPassword}`
+        this.$store.dispatch('setFlash', {
+          message:
           `
           <h2>Success!</h2>
-          <a href="${url}">${url}</a>
+          <a href="${shareLink}">${shareLink}</a>
           `,
           context: 'success'
         })

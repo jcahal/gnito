@@ -1,5 +1,6 @@
-FROM node:lts
+FROM node:lts-alpine
 WORKDIR /api
 COPY . .
 RUN npm install
+CMD npm start
 EXPOSE 3000

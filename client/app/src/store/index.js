@@ -2,9 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '@/router'
 import axios from 'axios'
+import { hashPassword } from '@/utils'
 
 Vue.use(Vuex)
 Vue.use(axios, router)
+
+const api = process.env.VUE_APP_API_URL || "https://gnito-api.herokuapp.com/api"
 
 export default new Vuex.Store({
   state: {
@@ -38,8 +41,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    retrieveDrop(context) {
-      axios.get(`http://localhost:3000/api${router.currentRoute.fullPath}`).then(response => {
+    async retrieveDrop(context) {
+      const dropId = router.currentRoute.params.drop
+      const pwd = router.currentRoute.query.pwd
+      const passwordHash = await hashPassword(pwd)
+      axios.get(`${api}/${dropId}?pwd=${passwordHash}`).then(response => {
         const drop = response.data
         context.commit('SET_DROP', drop)
       })

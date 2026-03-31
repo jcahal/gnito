@@ -1,6 +1,7 @@
 <template>
   <section class="logo">
     <h1><small>inco</small>GNITO</h1>
+    <p class="cold-start-notice">First request may take ~30s to wake the server.</p>
   </section>
 </template>
 
@@ -23,5 +24,11 @@ export default {
 
   .logo h1 small {
     font-family: 'Pacifico', cursive;
+  }
+
+  .cold-start-notice {
+    font-size: 0.85em;
+    opacity: 0.6;
+    margin-top: 0.5em;
   }
 </style>
